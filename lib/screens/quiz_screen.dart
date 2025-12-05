@@ -283,4 +283,6 @@ class _AnimatedOptionCardState extends State<AnimatedOptionCard> {
       ),
     );
   }
+
+  //
 }
