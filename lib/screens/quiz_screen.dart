@@ -5,8 +5,6 @@ import 'package:provider/provider.dart';
 
 import '../provider/quiz_provider.dart';
 
-// Define a new color palette for a modern look
-
 class QuizScreen extends StatelessWidget {
   const QuizScreen({super.key});
 
@@ -33,9 +31,7 @@ class QuizScreen extends StatelessWidget {
             bottom: PreferredSize(
               preferredSize: const Size.fromHeight(4.0),
               child: LinearProgressIndicator(
-                value:
-                    1.0 /
-                    provider.lesson!.activities.length, // Placeholder for Q 1/N
+                value: 1.0 / provider.lesson!.activities.length,
                 backgroundColor: AppColors.primaryColor.withValues(alpha: 0.3),
                 valueColor: const AlwaysStoppedAnimation<Color>(Colors.white),
               ),
@@ -66,7 +62,7 @@ class QuizScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        // 1. Question Card with enhanced styling
+                        //todo 1. Question Card with enhanced styling
                         ZoomIn(
                           duration: const Duration(milliseconds: 600),
                           child: Card(
@@ -93,7 +89,7 @@ class QuizScreen extends StatelessWidget {
                                     ),
                                   ),
 
-                                  // 2. Bolder, larger question text
+                                  //todo 2. Bolder, larger question text
                                   Text(
                                     provider.lesson!.activities[0].question,
                                     style: const TextStyle(
@@ -170,6 +166,7 @@ class QuizScreen extends StatelessWidget {
                                   padding: const EdgeInsets.symmetric(
                                     vertical: 18,
                                   ),
+
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(16),
                                   ),
