@@ -111,7 +111,7 @@ class QuizScreen extends StatelessWidget {
                                   padding: const EdgeInsets.only(bottom: 12.0),
                                   child: AnimatedOptionCard(
                                     key: ValueKey(
-                                      '$option-${provider.hasAnswered}',
+                                      '$option-${provider.selectedAnswer}-${provider.hasAnswered}',
                                     ),
                                     option: option,
                                     provider: provider,
@@ -158,7 +158,7 @@ class QuizScreen extends StatelessWidget {
 }
 
 //todo Custom Animated Option Card Widget
-class AnimatedOptionCard extends StatefulWidget {
+class AnimatedOptionCard extends StatelessWidget {
   final String option;
   final QuizProvider provider;
 
@@ -169,49 +169,15 @@ class AnimatedOptionCard extends StatefulWidget {
   });
 
   @override
-  State<AnimatedOptionCard> createState() => _AnimatedOptionCardState();
-}
-
-class _AnimatedOptionCardState extends State<AnimatedOptionCard> {
-  bool _shouldShake = false;
-
-  @override
-  void didUpdateWidget(AnimatedOptionCard oldWidget) {
-    super.didUpdateWidget(oldWidget);
-
-    // Trigger shake when answer is revealed and this option is wrong
-    if (!oldWidget.provider.hasAnswered && widget.provider.hasAnswered) {
-      final isSelected = widget.provider.selectedAnswer == widget.option;
-      final correctAnswer = widget.provider.lesson!.activities[0].answer;
-      final isWrong = isSelected && widget.option != correctAnswer;
-
-      if (isWrong) {
-        setState(() {
-          _shouldShake = true;
-        });
-
-        // Reset shake state after animation
-        Future.delayed(const Duration(milliseconds: 500), () {
-          if (mounted) {
-            setState(() {
-              _shouldShake = false;
-            });
-          }
-        });
-      }
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final isSelected = widget.provider.selectedAnswer == widget.option;
-    final hasAnswered = widget.provider.hasAnswered;
+    final isSelected = provider.selectedAnswer == option;
+    final hasAnswered = provider.hasAnswered;
 
-    Widget cardContent = AnimatedContainer(
+    return AnimatedContainer(
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOut,
       decoration: BoxDecoration(
-        color: widget.provider.getOptionColor(widget.option),
+        color: provider.getOptionColor(option),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
           color: isSelected ? Colors.blueAccent.shade700 : Colors.transparent,
@@ -230,9 +196,7 @@ class _AnimatedOptionCardState extends State<AnimatedOptionCard> {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          onTap: hasAnswered
-              ? null
-              : () => widget.provider.handleAnswer(widget.option),
+          onTap: hasAnswered ? null : () => provider.handleAnswer(option),
           borderRadius: BorderRadius.circular(12),
           child: Padding(
             padding: const EdgeInsets.all(16),
@@ -240,7 +204,7 @@ class _AnimatedOptionCardState extends State<AnimatedOptionCard> {
               children: [
                 Expanded(
                   child: Text(
-                    widget.option,
+                    option,
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w500,
@@ -254,20 +218,10 @@ class _AnimatedOptionCardState extends State<AnimatedOptionCard> {
         ),
       ),
     );
-
-    // Apply shake animation if wrong answer
-    if (_shouldShake) {
-      return ElasticIn(
-        duration: const Duration(milliseconds: 500),
-        child: cardContent,
-      );
-    }
-
-    return cardContent;
   }
 
   Widget _buildIcon() {
-    final icon = widget.provider.getOptionIcon(widget.option);
+    final icon = provider.getOptionIcon(option);
 
     if (icon == null) {
       return const SizedBox(width: 28, height: 28);
@@ -276,13 +230,7 @@ class _AnimatedOptionCardState extends State<AnimatedOptionCard> {
     // Simple fade in animation for icons
     return FadeIn(
       duration: const Duration(milliseconds: 300),
-      child: Icon(
-        icon,
-        color: widget.provider.getOptionIconColor(widget.option),
-        size: 28,
-      ),
+      child: Icon(icon, color: provider.getOptionIconColor(option), size: 28),
     );
   }
-
-  //
 }
