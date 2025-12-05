@@ -25,9 +25,9 @@ class QuizScreen extends StatelessWidget {
               ),
             ),
             centerTitle: true,
-            elevation: 8, // Increase elevation for more depth
+            elevation: 8,
             shadowColor: AppColors.primaryColor.withValues(alpha: 0.5),
-            // Add a simple progress indicator (assuming provider has a current index)
+            //todo Add a simple progress indicator (assuming provider has a current index)
             bottom: PreferredSize(
               preferredSize: const Size.fromHeight(4.0),
               child: LinearProgressIndicator(
@@ -118,7 +118,7 @@ class QuizScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 16),
 
-                        // Animated Options List
+                        //todo Animated Options List
                         Expanded(
                           child: ListView.builder(
                             itemCount:
@@ -150,7 +150,7 @@ class QuizScreen extends StatelessWidget {
                           ),
                         ),
 
-                        // Animated Try Again Button
+                        //todo Animated Try Again Button
                         if (provider.hasAnswered)
                           FadeInUp(
                             duration: const Duration(milliseconds: 400),
@@ -210,7 +210,7 @@ class AnimatedOptionCard extends StatelessWidget {
     final isSelected = provider.selectedAnswer == option;
     final hasAnswered = provider.hasAnswered;
 
-    // 3. Define vibrant correct/incorrect colors
+    //todo Define vibrant correct/incorrect colors
     Color baseColor = Colors.white;
     List<BoxShadow> shadows = [
       BoxShadow(
@@ -220,10 +220,10 @@ class AnimatedOptionCard extends StatelessWidget {
       ),
     ];
 
-    // Get color from provider (assuming provider.getOptionColor is updated)
+    //todo Get color from provider (assuming provider.getOptionColor is updated)
     Color containerColor = provider.getOptionColor(option);
 
-    // Default/Unselected state styling
+    //todo Default/Unselected state styling
     if (!hasAnswered) {
       containerColor = baseColor;
       if (isSelected) {
@@ -237,7 +237,7 @@ class AnimatedOptionCard extends StatelessWidget {
         ];
       }
     } else {
-      // Answered state: make correct/incorrect feedback pop more
+      //todo Answered state: make correct/incorrect feedback pop more
       if (containerColor == Colors.green) {
         shadows = [
           BoxShadow(
@@ -314,7 +314,7 @@ class AnimatedOptionCard extends StatelessWidget {
       return const SizedBox(width: 30, height: 30);
     }
 
-    // Simple fade in animation for icons
+    //todo Simple fade in animation for icons
     return FadeIn(
       duration: const Duration(milliseconds: 400),
       child: Icon(
