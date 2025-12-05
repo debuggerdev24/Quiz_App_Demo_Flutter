@@ -1,0 +1,12 @@
+{
+  "id": "CP1_TEST_L1",
+  "title": "Test Lesson",
+  "activities": [
+    {
+      "type": "qcm",
+      "question": "What is 2 + 2?",
+      "options": ["3", "4", "5"],
+      "answer": "4"
+    }
+  ]
+}
